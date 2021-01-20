@@ -34,7 +34,7 @@ using namespace std;
 
 class Solution {
  public:
-  int solution(vector<int>& g, vector<int>& s) {
+  static int solution(vector<int>& g, vector<int>& s) {
     
   }
 };
