@@ -37,6 +37,8 @@
  * 并且让 slow 和 fast 每次都前进一步，当 slow 和 fast
  * 第二次相遇时，相遇的节点就是环路的开始点（入环的第一个节点）
  *
+ * Floyd 判圈法--README.md
+ *
  * @LastEditors: zzh
  * @LastEditTime: 2021-01-14 15:07:57
  * @FilePath: /algo_sum/template.cpp
@@ -56,18 +58,41 @@ struct ListNode {
 class Solution {
  public:
   static ListNode* detectCycle(ListNode* head) {
-    ListNode* fast;
-    ListNode* slow;
-    // 首先一定要考虑特殊情况，如果只有一个或者两个 ListNode，必不可能有环路
-    if (!fast->next || !fast->next->next) {
-      return nullptr;
+    ListNode* fast = head;
+    ListNode* slow = head;
+    // 一定要考虑特殊情况，如果只有一个或者两个 ListNode，必不可能有环路
+    do {
+      if (!fast || !fast->next) {
+        return nullptr;
+      }
+      fast = fast->next->next;
+      slow = slow->next;
+    } while (fast != slow);
+    
+    // 如果能跳出 while 循环，说明一定有环
+    fast = head;
+    while (fast != slow) {
+      fast = fast->next;
+      slow = slow->next;
     }
-
+    return fast;
   }
 };
 
 int main(int argc, char const* argv[]) {
   // 首先构造一个链表
-  
+  ListNode* node1 = new ListNode(3);
+  ListNode* node2 = new ListNode(2);
+  ListNode* node3 = new ListNode(0);
+  ListNode* node4 = new ListNode(4);
+  node1->next = node2;
+  node2->next = node3;
+  node3->next = node4;
+  // 环路
+  node4->next = node2;
+
+  // 检测入环点中的 val 值
+  cout << (Solution::detectCycle(node1)->val) << endl;
+
   return 0;
 }
