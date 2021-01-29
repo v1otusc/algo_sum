@@ -44,7 +44,55 @@ using namespace std;
 
 class Solution {
  public:
-  static string minWindow(string s, string t) {}
+  static string minWindow(string S, string T) {
+    // 为什么要使用长度为 128 的数组来映射字符？ 因为 ASCII 码表共有 128
+    // 个字符。
+    // 表示 S 中每个字符缺少的数量
+    vector<int> chars(128, 0);
+    // 表示每个字符是否在 T 中存在
+    vector<bool> flag(128, false);
+
+    // 先统计 T 中的字符情况
+    for (size_t i = 0; i < T.size(); i++) {
+      // 这里实际上发生了一个隐式转换，即将字符转换为其对应的 ASCII 码表中的位置
+      // A-Z 65-90 a-z 97-122
+      flag[T[i]] = true;
+      ++chars[T[i]];
+    }
+    int cnt = 0;
+    int l = 0;
+    int min_l = 0;
+    // 故意多加个 1，这样就能方便最后返回空字符串
+    int min_Size = S.size() + 1;
+    // 移动滑动窗口，不断更改统计数据
+    for (size_t r = 0; r < S.size(); r++) {
+      if (flag[S[r]]) {
+        if (--chars[S[r]] >= 0) {
+          ++cnt;
+        }
+
+        // 若目前滑动窗口已包含 T 中全部字符
+        // 则尝试将 l 右移，在不影响结果的情况下获得最短字符串
+        while (cnt == T.size()) {
+          if (r - l + 1 < min_Size) {
+            min_l = l;
+            min_Size = r - l + 1;
+          }
+          if (flag[S[l]] && ++chars[S[l]] > 0) {
+            --cnt;
+          }
+          ++l;
+        }
+      }
+    }
+    // substr 中的第二个参数为 substring 的长度
+    return min_Size > S.size() ? "" : S.substr(min_l, min_Size);
+  }
 };
 
-int main(int argc, char const* argv[]) { return 0; }
+int main(int argc, char const* argv[]) {
+  string S = "ADOBECODEBANC";
+  string T = "ABC";
+  cout << Solution::minWindow(S, T) << endl;
+  return 0;
+}

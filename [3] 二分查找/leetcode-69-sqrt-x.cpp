@@ -48,8 +48,12 @@ class Solution {
     int l = 1, r = x, mid, ans;
     while (l <= r) {
       mid = l + (r - l) / 2;
+      if ((long long)mid * mid == x) {
+        ans = mid;
+        break;
+      }
       // 防止越界，用 long long
-      if ((long long)mid * mid <= x) {
+      else if ((long long)mid * mid < x) {
         ans = mid;
         l = mid + 1;
       } else {
