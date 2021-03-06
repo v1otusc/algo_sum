@@ -120,13 +120,12 @@ void merge_sort(vector<int> &nums, int l, int r, vector<int> &temp) {
 
 在打扑克牌的时候，每一次摸完牌，都会按数字大小或者花色，插入到合适的位置，直到摸完最后一张牌，我们手中的牌已经按大小顺序排列好了。这整个过程就是一个插入排序。
 
-由于重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。 插入排序和冒泡排序在平均和最坏情况下的时间复杂度都是 O(n^2)，最好情况下都是O(n)，空间复杂度是 O(1)。
+由于重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。插入排序和冒泡排序在平均和最坏情况下的时间复杂度都是 O(n^2)，最好情况下都是O(n)，空间复杂度是 O(1)。
 
 ```c++
 void insertion_sort(vector<int>& nums, int n) {
   for (int i = 0; i < n; ++i) {
     for (int j = i; j > 0; --j) {
-      // 也可以写到第二个判断语句中
       if (nums[j] < nums[j - 1]) {
         swap(nums[j], nums[j - 1]);
       }
@@ -139,24 +138,112 @@ void insertion_sort(vector<int>& nums, int n) {
 swap 的函数原型：
 
 ```c++
-template <class T>
+template <class T> void swap(T& a, T& b) {
+  T c(a);
+  a = b;
+  b = c;
+}
+```
+
+利用 swap() 函数进行内存的释放：
+
+在 vector 数据结构中：.erase() 删除元素；.clear() 清空数据；.size() 当前 vector 容器内存储的元素个数；.capacity() 当前vector容器重新分配内存之前所能容纳的元素数量；.swap() 函数交换；.reverse() 向系统预定一段足够的连续的空间
+
+但是，vector 与 deque 不同，其内存占用空间只会增长，不会减小。比如你首先分配了10000个字节，然后 erase 掉后面 9999 个，则虽然有效元素只有一个，但是内存占用仍为10000 个。也就是说仅有 size() 的结果发生了变化，capacity() 保持不变。所有空间在 vector 析构时回收。一般，我们都会通过 vector 中成员函数 clear 进行清除操作，但它清除的是所有的元素，使 vector 的大小减少至 0，却不能减小 vector 占用的内存。要避免 vector 持有它不再需要的内存，这就需要一种方法来使得它从曾经的容量减少至它现在需要的容量，这样减少容量的方法被称为“收缩到合适（shrink to fit）”。（节选自《Effective STL》），可以通过如下代码释放过剩的容量：
+
+```c++
+vector<T>().swap()
+```
+
+在以下代码中可以看到，用 clear() 无法保证内存回收。但是 swap() 可以。
+
+```c++
+#include <iostream>  
+#include <algorithm>  
+#include <vector>  
+#include <iterator>  
+  
+using namespace std;  
+  
+int main ()   
+{  
+  int x = 10;  
+  vector<int> myvector(10000, x);    
+  
+  //这里打印仅仅是元素的个数不是内存大小  
+  cout << "myvector size:"  
+       << myvector.size()  
+       << endl;  
+  
+  //swap交换函数释放内存：vector<T>().swap(X);  
+  //T:int ; myvertor代表X  
+  vector<int>().swap(myvector);  
+  
+  //两个输出仅用来表示swap前后的变化  
+  cout << "after swap :"  
+       << myvector.size()  
+       << endl;  
+  
+  return 0;  
+}
+```
+
+在输出中 `after swap :0`。代码中，vector<int>() 使用 vector 的默认构造函数建立临时 vector 对象，再在该临时对象上调用 swap() 函数，swap() 调用之后对象 myvector 占用的空间就等于一个默认构造的对象的大小，临时对象就具有原来对象 myvector 的大小，而该临时对象随即就会被析构，从而其占用的空间也被释放：
+
+```c++
+std::vector<T>().swap(X)
+
+// 作用相当于：
+{
+  std::vector<T>  temp(X);
+  temp.swap(X);
+}
 ```
 
 ### 冒泡排序(Bubble sort)
 
+冒泡排序依次比较相邻的数据，将小数据放在前，大数据放在后；即第一趟先比较第 1 个和第 2 个数，大数在后，小数在前，再比较第 2 个数与第 3 个数，大数在后，小数在前，以此类推则将最大的数"滚动"到最后一个位置；第二趟则将次大的数滚动到倒数第二个位置......第 n-1 (n 为无序数据的个数)趟即能完成排序。对冒泡排序算法进行简单的优化，用一个标记来记录在一趟的比较过程中是否存在交换，如果不存在交换则整个数组已经有序，退出排序过程，反之则继续进行下一趟的比较。
+
+由于重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。插入排序和冒泡排序在平均和最坏情况下的时间复杂度都是 O(n^2)，最好情况下都是 O(n)，空间复杂度是 O(1)。
+
 ```c++
 void bubble_sort(vector<int> &nums, int n) {
-  
+  bool swapped = false;
+  for (int i = 1; i < n; ++i) {
+    swapped = false;
+    for (int j = 1; j < n - i + 1; ++j) {
+      if (nums[j] < nums[j - 1]) {
+        swap(nums[j], nums[j - 1]);
+        swapped = true;
+      }
+    }
+    if (!swapped) {
+      break;
+    }
+  }
 }
 ```
 
 ### 选择排序(Selection sort)
 
-```c++
-void selection_sort(vector<int> &nums, int n) {
+简单选择排序采用最简单的选择方式，从头到尾顺序扫描序列，找出最小的一个记录，和第一个记录交换，接着从剩下的记录中继续这种选择和交换，最终使序列有序。 
 
+```c++
+void selection_sort(vector<int>& nums, int n) {
+  int mid;
+  for (int i = 0; i < n - 1; ++i) {
+    mid = i;
+    for (int j = i + 1; j < n; ++j) {
+      if (nums[j] < nums[mid]) {
+        mid = j;
+      }
+    }
+    swap(nums[mid], nums[i]);
+  }
 }
 ```
+
+最好情况，序列有序，时间复杂度为 O(n); 最坏情况，序列逆序，时间复杂度为 O(n^2); 平均时间复杂度为 O(n^2)。需要额外的辅助变量，因此空间复杂度为 O(1)。
 
 以上排序算法的调用方法为
 
