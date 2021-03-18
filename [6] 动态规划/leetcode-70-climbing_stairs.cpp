@@ -42,7 +42,15 @@ class Solution {
  public:
   static int climbStairs(int n) {
     if (n <= 2) return n;
-    
+    // 因为要返回 dp[n], 所以需要有 n + 1 个元素
+    // 爬第 0 级台阶共有一种选择
+    // 爬第 1 级台阶共有一种选择
+    // 爬第 2 级台阶共有两种选择
+    vector<int> dp(n + 1, 1);
+    for (int i = 2; i <= n; ++i) {
+      dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    return dp[n];
   }
 };
 
