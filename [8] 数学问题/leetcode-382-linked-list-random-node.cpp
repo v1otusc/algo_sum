@@ -22,7 +22,8 @@
  *
  * @题目思路：
  *
- * 
+ * 不同于数组,在未遍历完链表前,我们无法知道链表的总长度。
+ * 使用蓄水池算法，详见 README.md 
  *
  * @LastEditors: zzh
  * @LastEditTime: 2021-01-14 15:07:57
@@ -33,9 +34,34 @@
 
 using namespace std;
 
+struct ListNode {
+  int val;
+  ListNode* next;
+  ListNode() : val(0), next(nullptr) {}
+  ListNode(int x) : val(x), next(nullptr) {}
+  ListNode(int x, ListNode* next) : val(x), next(next) {}
+};
+
 class Solution {
+ private:
+  ListNode* head;
+
  public:
-  int solution(vector<int>& g, vector<int>& s) {}
+  Solution(ListNode* n) : head(n) {}
+  int getRandom() {
+    int ans = head->val;
+    ListNode* node = head->next;
+    int i = 2;
+    while (node) {
+      // 产生指定范围内的随机数
+      if ((rand() % i) == 0) {
+        ans = node->val;
+      }
+      ++i;
+      node = node->next;
+    }
+    return ans;
+  }
 };
 
 int main(int argc, char const* argv[]) { return 0; }

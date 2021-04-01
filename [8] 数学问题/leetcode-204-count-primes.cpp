@@ -44,6 +44,7 @@ class Solution {
         for (int j = 2 * i; j < n; j += i) {
           if (primes[j]) {
             primes[j] = false;
+            // 每标一次 false，结果减 1
             count--;
           }
         }
