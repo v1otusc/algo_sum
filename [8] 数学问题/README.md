@@ -42,10 +42,69 @@ int xGCD(int a, int b, int &x, int &y) {
 
 埃拉托斯特尼筛法(Sieve of Eratosthenes,简称埃氏筛法)是非常常用的,判断一个整数是否是质数的方法。其原理也十分易懂:从 1 到 n 遍历,假设当前遍历到 m,则把所有小于 n 的、且是 m 的倍数的整数标为和数;遍历完成后,没有被标为和数的数字即为质数。
 
-
 ### C++ 中使用随机数
 
+C/C++中生成随机数需要用到两个函数：rand() 函数和 srand() 函数，C/C++ 中没有生成在一定范围内的随机数的内置函数，不过我们可以利用前边的两个函数来实现生成在一定范围内的随机数。
 
+**rand() 函数**
+
+该函数是一个随机发生器，返回一个随机数值，范围在 [0, RAND_MAX] 之间。RAND_MAX 定义在 stdlib.h 头文件中，C++ 中可以使用 cstdlib 头文件。
+
+```c++
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+int main()
+{
+  cout << "RAND_MAX:" << RAND_MAX << endl;
+  for (int i = 0; i < 5; i++)
+    cout << rand() << endl;
+}
+```
+
+RAND_MAX 为 2<sup>15</sup> - 1。
+
+*rand()产生的是伪随机数，每次执行的结果是相同的。即上面的程序每次运行结果都一样。*
+
+**srand() 函数**
+
+为了避免每次生成固定的随机数，引进 srand() 函数。该函数的功能是初始化随机数发生器，同样在头文件 cstdlib 中。
+
+```c++
+// 用来设置 rand() 产生随机数时的随机种子，参数 seed 必须是整数，如果每次 seed 设置都相同，rand() 产生的随机数同样
+srand(unsigned int seed);
+```
+
+我们可使用 `srand((unsigned)time(NULL))` 的方法来产生不同的随机种子。需要引入头文件 time.h 
+
+```c++
+#include <iostream>
+#include <cstdlib>
+#include <time.h>
+using namespace std;
+ 
+int main()
+{
+  cout <<"RAND_MAX:"<< RAND_MAX << endl;
+  // time(NULL) 是指返回从 1970 年 1.1日午夜 0 点到现在的秒数
+  srand((unsigned)time(NULL));
+  for (int i = 0; i < 5; i++)
+    cout << rand() << endl;
+}
+```
+
+**产生指定范围内的随机数**
+
+要产生指定范围内的随机数，可以先使用 rand() 函数产生一个 \[0,RAND_MAX\] 范围内的随机数，然后在变换到指定范围内。 
+
+产生 \[a, b) 的随机数，可以使用 (rand() % (b-a))+a;
+产生 \[a, b\] 的随机数，可以使用 (rand() % (b-a+1))+a;
+产生 (a, b\] 的随机数，可以使用 (rand() % (b-a))+a+1;
+
+通用公式：`a + rand() % n`；其中：a 为范围起始位置，n 为整数的范围。
+
+产生\[0,1\]的浮点数，可以使用 rand()/double(RAND_MAX);
 
 ### 蓄水池算法
 
