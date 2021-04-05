@@ -71,7 +71,7 @@ class Solution {
 
       dq.push_back(i);
 
-      // 至少向右移动了一个窗口
+      // 至少向右移动了一个窗口，才能 push_back
       if (i >= k - 1) {
         ans.push_back(nums[dq.front()]);
       }
