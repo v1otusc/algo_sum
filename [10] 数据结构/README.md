@@ -103,7 +103,7 @@ void sink(int pos) {
 
 (b) unordered_multiset: 支持重复元素的 unordered_set。
 
-(c) unordered_map: :哈希映射或哈希表,在 unordered_set 的基础上加上映射关系,可以对每一个元素 key 存一个值 value。在某些情况下,如果 key 的范围已知且较小,我们也每一个元素 key 存一个值 value。在某些情况下,如果 key 的范围已知且较小,我们也可以用 vector 代替 unordered_map,用位置表示 key,用每个位置的值表示 value。
+(c) unordered_map: :哈希映射或哈希表,在 unordered_set 的基础上加上映射关系,可以对每一个元素 key 存一个值 value。在某些情况下,如果 key 的范围已知且较小,我们也每一个元素 key 存一个值 value，用 vector 代替 unordered_map,用位置表示 key,用每个位置的值表示 value。
 
 (d) unordered_multimap:支持重复元素的 unordered_map。
 

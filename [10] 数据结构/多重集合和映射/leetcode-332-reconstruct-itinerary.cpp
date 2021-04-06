@@ -51,6 +51,7 @@ class Solution {
     s.push("JFK");
     while (!s.empty()) {
       string start = s.top();
+      
       if (hash[start].empty()) {
         ans.push_back(start);
         s.pop();
