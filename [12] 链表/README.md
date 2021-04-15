@@ -15,3 +15,20 @@ struct ListNode {
 
 **注意：** 一般来说,算法题不需要删除内存。在刷 LeetCode 的时候,如果想要删除一个节点,可以直接进行指针操作而无需回收内存。实际做软件工程时,对于无用的内存,建议尽量显式回收,或利用智能指针。
 
+**链表的 splice()**
+
+list::splice实现list拼接的功能。将源list的内容部分或全部元素删除，拼插入到目的list。
+
+函数有以下三种声明：
+
+1. void splice ( iterator position, list<T,Allocator>& x );
+2. void splice ( iterator position, list<T,Allocator>& x, iterator it );
+3. void splice ( iterator position, list<T,Allocator>& x, iterator first, iterator last );
+
+position 是要操作的list对象的迭代器
+
+对于1，会在position把list &x所有的元素到**剪接**到要操作的list对象，而不删除要操的list对象中的元素。
+
+对于2，只会把it的值剪接到要操作的list对象。
+
+对于3，把first 到 last 剪接到要操作的list对象中。
