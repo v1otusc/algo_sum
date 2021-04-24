@@ -63,6 +63,7 @@ class LRUCache {
       return -1;
     }
     // 将其标记为最新的信息
+    // 把 it->second 的值剪接到 cache 的 cache.begin() 位置
     cache.splice(cache.begin(), cache, it->second);
     return it->second->second;
   }
@@ -75,7 +76,7 @@ class LRUCache {
       cache.splice(cache.begin(), cache, it->second);
       return;
     }
-    // 如果就要插入
+    // 如果没有就要插入
     cache.insert(cache.begin(), make_pair(key, value));
     hash[key] = cache.begin();
     // 然后检查是否超过 size()
