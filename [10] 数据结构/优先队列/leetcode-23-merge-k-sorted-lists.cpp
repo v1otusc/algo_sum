@@ -48,7 +48,7 @@ struct ListNode {
 
 class Solution {
  private:
-  // 采用仿函数，实现小根堆，使用大于号
+  // 采用仿函数，实现小根堆，使用大于号 实现大根堆，使用小于号
   struct cmp {
     bool operator()(ListNode* l1, ListNode* l2) { return l1->val > l2->val; }
   };
