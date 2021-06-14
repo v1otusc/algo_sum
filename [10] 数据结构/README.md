@@ -29,7 +29,22 @@
 
 (a) stack: 后入先出(LIFO)的数据结构，默认基于 deque 实现。stack 常用于深度优先搜索、一些字符串匹配问题以及单调栈问题
 
+- stack.push()
+- stack.empty()  
+- stack.pop(), 需要自行判断栈是否为空，才可执行 pop() 函数
+- stack.top()
+
 (b) queue: 先入先出(FIFO)的数据结构，默认基于 deque 实现。queue 常用于广度优先搜索。
+
+- front() 返回 queue 中第一个元素的引用。如果 queue 是常量，就返回一个常引用；如果 queue 为空，返回值是未定义的。
+- back() 返回 queue 中最后一个元素的引用。如果 queue 是常量，就返回一个常引用；如果 queue 为空，返回值是未定义的。
+- push(const T& obj)：在 queue 的尾部添加一个元素的副本。这是通过调用底层容器的成员函数 push_back() 来完成的。
+- push(T&& obj)：以移动的方式在 queue 的尾部添加元素。这是通过调用底层容器的具有右值引用参数的成员函数 push_back() 来完成的。
+- pop()：删除 queue 中的第一个元素。即 queue.front()。
+- size(): 返回 queue 中元素的个数。
+- empty()
+- emplace(): 用传给 emplace() 的参数调用 T 的构造函数，在 queue 的尾部生成对象。
+- swap(queue\<T\> &other_q)：将当前 queue 中的元素和参数 queue 中的元素交换。它们需要包含相同类型的元素。也可以调用全局函数模板 swap() 来完成同样的操作。
 
 (c) priority_queue: 最大值先出的数据结构，默认基于 vector 实现堆结构，可以在 O(nlogn) 的时间内排序数组，,O(logn) 的时间插入任意值,O(1) 的时间获得最大值,O(logn) 的时间删除最大值。priority_queue 常用于维护数据结构并快速获取最大或最小值。
 

@@ -60,6 +60,7 @@ class MyQueue {
 
   // 翻转数组
   void in2out() {
+    // 外圈的判断很重要
     if (out.empty()) {
       while (!in.empty()) {
         int x = in.top();

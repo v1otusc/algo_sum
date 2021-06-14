@@ -48,6 +48,7 @@ void quick_sort(vector<int>& nums, int l, int r) {
     }
     nums[last] = nums[first];
   }
+  // 实际上这时候 nums[first] = nums[last] = key
   nums[first] = key;
   //-- 到这里就完成了一趟排序
 
@@ -58,7 +59,7 @@ void quick_sort(vector<int>& nums, int l, int r) {
 }
 ```
 
-快速排序的最好和平均时间复杂度为 O(nlogn)，最坏情况下为 O(n^2)。
+快速排序的最好和平均时间复杂度为 O(nlogn)，最坏情况下为 O(n^2)。可以通过在算法中引入随机性，使得算法对所有输入都能获得较好的期望性能。比如我们随机地选择基准数，这样上述的最坏情况就很难发生。
 
 ### 归并排序(Merge sort)
 
@@ -68,7 +69,7 @@ void quick_sort(vector<int>& nums, int l, int r) {
 
 ![](../figs/mergeSort.png)
 
-从上图可以看出，每次合并操作的平均时间复杂度为 O(n)，而完全二叉树的深度为 \|log2n\|，总的时间复杂度为 O(nlogn)。而且，归并排序的最好，最坏，平均时间复杂度均为 O(nlogn)。
+从上图可以看出，每次合并操作的平均时间复杂度为 O(n)，而完全二叉树的深度为 \|log<sub>2</sub>n\|，总的时间复杂度为 O(nlogn)。而且，归并排序的最好，最坏，平均时间复杂度均为 O(nlogn)。
 
 **合并相邻有序的子序列**
 
