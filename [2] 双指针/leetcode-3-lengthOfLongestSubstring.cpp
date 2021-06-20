@@ -32,21 +32,29 @@
 
 using namespace std;
 
-struct ListNode {
-  int val;
-  ListNode* next;
-  ListNode(int x) : val(x), next(nullptr) {}
-  ListNode(int x, ListNode* next) : val(x), next(next) {}
-};
-
 class Solution {
  public:
   int lengthOfLongestSubstring(string s) {
-    int max_len = 0;
-    int n = s.length();
-    for (int i = 0; i < n; ++i) {
+    // 需要一个数据结构来判断是否有重复的重复的字符串：unordered_set
+    unordered_set<int> c_set;
+    // 右指针，初始化为下标 -1, 很巧妙
+    int rp = -1;
+    int ans = 0;
+    int s_size = s.size();
+    // c_set.insert(s[0]);
+    // 枚举左指针的位置，初始值隐示地表示为 -1
+    for (int i = 0; i < s_size; ++i) {
+      if (i != 0) {
+        // 左指针向右移动，移除一个字符
+        c_set.erase(s[i - 1]);
+      }
+      while (rp + 1 < s_size && !c_set.count(s[rp + 1])) {
+        c_set.insert(s[rp + 1]);
+        rp++;
+      }
+      ans = max(ans, rp - i + 1);
     }
-    return max_len;
+    return ans;
   }
 };
 

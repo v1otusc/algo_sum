@@ -14,9 +14,9 @@
  *
  * @输入输出说明：
  *
-输入是一个待匹配字符串和一个用字符串表示的正则表达式,输出是一个布尔值,表示是否
-可以匹配成功。
-在这个样例中，可以重复 c 零次，重复 a 两次
+ 输入是一个待匹配字符串和一个用字符串表示的正则表达式,输出是一个布尔值,表示是否
+ 可以匹配成功。
+ 在这个样例中，可以重复 c 零次，重复 a 两次
  *
  * @限制条件：
  *
@@ -28,7 +28,17 @@
  截止的正则表达式匹配。根据正则表达式的不同情况，即字符、星号,点号,我们可以分情况讨论
  更新 dp 数组
 
- 正则表达式规则：
+ 正则表达式规则：'.'匹配任意单个字符 '*'匹配零个或多个前面的那一个元素
+
+ 最困难的就是：
+ 字母 + 星号的组合在匹配的过程中，本质上只会有两种情况：
+
+    匹配 s 末尾的一个字符，将该字符扔掉，而该组合还可以继续进行匹配；
+
+    不匹配字符，将该组合扔掉，不再进行匹配。
+
+  f[i][j]= f[i−1][j] or f[i][j−2] --​ s[i]=p[j−1]
+         = f[i][j-2]  -- s[i]!=p[j−1]​
  *
  * @LastEditors: zzh
  * @LastEditTime: 2021-01-14 15:07:57
@@ -41,13 +51,37 @@ using namespace std;
 
 class Solution {
  public:
-  static bool isMatch(string s, string p) {
+  bool isMatch(string s, string p) {
     int m = s.size();
     int n = p.size();
-    vector<vector<bool>> dp(m + 1, vector<bool>(n + 1, false));
-    dp[0][0] = true;
-    for (int i = 1; i <= n; ++i) {
-      
+    vector<vector<int>> dp(m + 1, vector<int>(n + 1));
+    dp[0][0] = 1;
+
+    auto matches = [&](int i, int j) {
+      if (i == 0) {
+        return false;
+      }
+      if (p[j - 1] == '.') {
+        return true;
+      }
+      return s[i - 1] == p[j - 1];
+    };
+
+    // i 从 0 开始
+    // j 从 1 开始
+    for (int i = 0; i < m + 1; ++i) {
+      for (int j = 1; j < n + 1; ++j) {
+        if (p[j - 1] == '*') {
+          dp[i][j] |= dp[i][j - 2];
+          if (matches(i, j - 1)) {
+            dp[i][j] |= dp[i - 1][j];
+          }
+        } else {
+          if (matches(i, j)) {
+            dp[i][j] |= dp[i - 1][j - 1];
+          }
+        }
+      }
     }
     return dp[m][n];
   }

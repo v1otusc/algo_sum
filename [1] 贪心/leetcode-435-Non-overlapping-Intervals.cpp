@@ -46,7 +46,7 @@ class Solution {
     if (intervals.size() < 2) {
       return 0;
     }
-    // 按照区间的结尾大小进行增序排列
+    // 按照区间的结尾从小到大进行增序排列
     sort(intervals.begin(), intervals.end(),
          [](vector<int> a, vector<int> b) { return a[1] < b[1]; });
 
