@@ -8,6 +8,7 @@
     - [2. Container Adaptors: 基于其他容器实现的数据结构](#2-container-adaptors-基于其他容器实现的数据结构)
     - [3. Associative Containers: 实现了排好序的数据结构](#3-associative-containers-实现了排好序的数据结构)
     - [4. Unordered Associative Containers: 对每个 Associative Containers 实现了哈希版本](#4-unordered-associative-containers-对每个-associative-containers-实现了哈希版本)
+  - [5. <Algorithm> 库总结](#5-algorithm-库总结)
 
 <!-- /TOC -->
 
@@ -128,5 +129,52 @@ void sink(int pos) {
 template <typename T>
 class HashTable {
   
+}
+```
+
+### 5. <Algorithm> 库总结
+
+(a) C++ reverse 函数的用法
+
+逆序（反转）无论是在 C 或是 C++ 中用的都特别多，常用于数组，字符串，容器等，其本身的函数参数也不复杂。
+
+标准 C 中是没有 reverse() 函数的，这是C++的一个新增函数，使用需要包含头文件
+
+```c++
+#include <algorithm>
+```
+
+reverse函数用于反转在[first,last)范围内的顺序（包括first指向的元素，不包括last指向的元素），reverse函数没有返回值
+
+```c++
+template <class BidirectionalIterator>
+void reverse (BidirectionalIterator first,BidirectionalIterator last);
+```
+
+例如，交换 vector 容器中元素的顺序
+
+```c++
+vector<int> v = {5,4,3,2,1};
+reverse(v.begin(),v.end());//v的值为1,2,3,4,5
+```
+
+还有 string 类的字符串
+
+```c++
+string str = {5, 4, 3, 2, 1};
+reverse(v.begin(), v.end());//v的值为pot.rohtam.www
+```
+
+函数原型为：
+
+```c++
+template <class BidirectionalIterator>
+void reverse (BidirectionalIterator first, BidirectionalIterator last)
+{
+  // 同时考虑了奇数和偶数的情况
+  while ((first!=last)&&(first!=--last)) {
+    std::iter_swap (first,last);
+    ++first;
+  }
 }
 ```
