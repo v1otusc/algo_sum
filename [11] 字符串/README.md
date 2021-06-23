@@ -6,7 +6,10 @@
 
 ### substr 用法
 
-
+- 需要`#include <string>`
+- 一种构造string的方法，形式是`s.substr(pos,n)`
+- 解释：返回一个 string，包含 s 中从 pos 开始的 n 个字符的拷贝（pos的默认值是0，n的默认值是s.size() - pos，即不加参数会默认拷贝整个s）
+- 异常：若 pos 的值超过了 string 的大小，则 substr 函数会抛出一个 out_of_range 异常；若 pos+n 的值超过了 string 的大小，则 substr 会调整 n 的值，只拷贝到 string 的末尾
 
 ### KMP 算法解决字符串匹配
 
