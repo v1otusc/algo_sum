@@ -15,7 +15,6 @@
  *
  * 输入一个整数,输出一个字符串,表示其七进制。
  *
- *
  * @限制条件：
  *
  * 在这个样例中,100 的七进制表示法来源于 100 = 2 * 49 + 0 * 7 + 2 * 1。
@@ -36,19 +35,20 @@ using namespace std;
 
 class Solution {
  public:
-  static string convertToBase7(int num) {
+  string convertToBase7(int num) {
     if (num == 0) return "0";
-    // 考虑负数
-    bool is_negative = (num < 0);
-    if (is_negative) num = -num;
-    string ans;
-    while (num) {
-      int a = num / 7;
-      int b = num % 7;
-      ans = to_string(b) + ans;
-      num = a;
+    string ans{"0"};
+    bool isnegative = false;
+    if (num < 0) isnegative = true;
+    // 否则负数取余数也是负数
+    if (isnegative) num = -num;
+    while (num != 0) {
+      int m = num % 7;
+      num /= 7;
+      ans += to_string(m);
     }
-    return is_negative ? ("-" + ans) : ans;
+    reverse(ans.begin(), ans.end());
+    return isnegative ? ("-" + ans) : ans;
   }
 };
 
