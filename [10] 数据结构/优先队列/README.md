@@ -50,6 +50,7 @@ priority_queue <int, vector<int>, less<int>> q;
 bool cmp(const int &a, const int &b){
     return a < b;
 }
+// 升序
 sort(vec.begin(), vec.end(), cmp);
 ```
 
