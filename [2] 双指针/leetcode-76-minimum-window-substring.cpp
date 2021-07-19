@@ -44,55 +44,57 @@ using namespace std;
 
 class Solution {
  public:
-  static string minWindow(string S, string T) {
-    // 为什么要使用长度为 128 的数组来映射字符？ 因为 ASCII 码表共有 128
-    // 个字符。
-    // 表示 S 中每个字符缺少的数量
-    vector<int> chars(128, 0);
-    // 表示每个字符是否在 T 中存在
-    vector<bool> flag(128, false);
+  string minWindow(string S, string T) {
+    unordered_map<char, int> need, window;
+    // 初始化 need 需要的字符及其个数
+    for (auto c : T) need[c]++;
 
-    // 先统计 T 中的字符情况
-    for (size_t i = 0; i < T.size(); i++) {
-      // 这里实际上发生了一个隐式转换，即将字符转换为其对应的 ASCII 码表中的位置
-      // A-Z 65-90 a-z 97-122
-      flag[T[i]] = true;
-      ++chars[T[i]];
-    }
-    int cnt = 0;
-    int l = 0;
-    int min_l = 0;
-    // 故意多加个 1，这样就能方便最后返回空字符串
-    int min_Size = S.size() + 1;
-    // 移动滑动窗口，不断更改统计数据
-    for (size_t r = 0; r < S.size(); r++) {
-      if (flag[S[r]]) {
-        if (--chars[S[r]] >= 0) {
-          ++cnt;
+    // left right 是左闭右开的
+    int left = 0, right = 0, valid = 0;
+
+    // 记录最小覆盖子串的起始索引及长度
+    int start = 0, len = INT_MAX;
+    while (right < S.size()) {
+      // 右移窗口
+      char c = S[right];
+      right++;
+
+      // 进行窗口中的一系列更新
+      if (need.count(c)) {
+        window[c]++;
+        // 某个字符已经满足条件了
+        if (window[c] == need[c]) {
+          valid++;
         }
+      }
 
-        // 若目前滑动窗口已包含 T 中全部字符
-        // 则尝试将 l 右移，在不影响结果的情况下获得最短字符串
-        while (cnt == T.size()) {
-          if (r - l + 1 < min_Size) {
-            min_l = l;
-            min_Size = r - l + 1;
+      // 判断是否可以左移窗口
+      while (valid == need.size()) {
+        // 更新最小覆盖子串
+        if (right - left < len) {
+          start = left;
+          len = right - left;
+        }
+        // 左移窗口
+        char d = S[left];
+        left++;
+        if (need.count(d)) {
+          // 某个字符不满足个数要求了
+          if (window[d] == need[d]) {
+            valid--;
           }
-          if (flag[S[l]] && ++chars[S[l]] > 0) {
-            --cnt;
-          }
-          ++l;
+          window[d]--;
         }
       }
     }
-    // substr 中的第二个参数为 substring 的长度
-    return min_Size > S.size() ? "" : S.substr(min_l, min_Size);
+    return len == INT_MAX ? "" : S.substr(start, len);
   }
 };
 
 int main(int argc, char const* argv[]) {
   string S = "ADOBECODEBANC";
   string T = "ABC";
-  cout << Solution::minWindow(S, T) << endl;
+  Solution s;
+  cout << s.minWindow(S, T) << endl;
   return 0;
 }
