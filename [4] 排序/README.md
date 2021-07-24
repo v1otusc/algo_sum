@@ -11,6 +11,7 @@
   - [冒泡排序(Bubble sort)](#冒泡排序bubble-sort)
   - [选择排序(Selection sort)](#选择排序selection-sort)
   - [堆排序(Heap sort)](#堆排序heap-sort)
+  - [稳定和不稳定排序](#稳定和不稳定排序)
 
 <!-- /TOC -->
 
@@ -320,4 +321,14 @@ insertion_sort(nums, nums.size());
 bubble_sort(nums, nums.size());
 selection_sort(nums, nums.size());
 ```
+
+### 稳定和不稳定排序
+
+稳定的排序算法：
+
+如：插入排序，基数排序，归并排序，冒泡排序，计数排序。
+
+不稳定的排序算法：
+
+不稳定的排序算法有：快速排序，希尔排序，选择排序，堆排序。
 
