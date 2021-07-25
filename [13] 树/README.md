@@ -4,6 +4,7 @@
 
 - [树](#树)
   - [二叉树的前中后序遍历](#二叉树的前中后序遍历)
+  - [二叉树的前中序遍历——非递归形式](#二叉树的前中序遍历非递归形式)
   - [二叉查找/搜索树(BST)](#二叉查找搜索树bst)
   - [字典树](#字典树)
 
@@ -42,6 +43,32 @@ void postorder(TreeNode* root) {
   postorder(root->left);
   postorder(root->right);
   visit(root);
+}
+```
+
+### 二叉树的前中序遍历——非递归形式
+
+**先序遍历**
+
+```c++
+class Solution {
+
+}
+```
+
+**中序遍历**
+
+```c++
+class Solution {
+
+}
+```
+
+**后序遍历**
+
+```c++
+class Solution {
+
 }
 ```
 
