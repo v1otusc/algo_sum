@@ -15,7 +15,7 @@
  * cache.put(1,1)
  * cache.put(2,2)
  * cache.get(1) //return 1
- * // 去掉2，为什么？因为cache.get(1)的时候，已经将该信息标为最新使用
+ * // 下一步去掉2，为什么？因为cache.get(1)的时候，已经将该信息标为最新使用
  * cache.put(3,3)
  * cache.get(2) return -1(not found)
  * cache.put(4,4) // evicit key 1
@@ -49,6 +49,7 @@ using namespace std;
 
 class LRUCache {
  private:
+  // 哈希链表的结构, 键代表 cahe 中的 key 值
   unordered_map<int, list<pair<int, int>>::iterator> hash;
   list<pair<int, int>> cache;
   int size;
@@ -63,7 +64,7 @@ class LRUCache {
       return -1;
     }
     // 将其标记为最新的信息
-    // 把 it->second 的值剪接到 cache 的 cache.begin() 位置
+    // 把 it->second 的值剪接到 cache 的 cache.begin() 位置, 迭代器类型
     cache.splice(cache.begin(), cache, it->second);
     return it->second->second;
   }
@@ -76,11 +77,11 @@ class LRUCache {
       cache.splice(cache.begin(), cache, it->second);
       return;
     }
-    // 如果没有就要插入
+    // 如果没有就要插入，但是不删除其他元素
     cache.insert(cache.begin(), make_pair(key, value));
     hash[key] = cache.begin();
     // 然后检查是否超过 size()
-    if(cache.size() > size) {
+    if (cache.size() > size) {
       hash.erase(cache.back().first);
       cache.pop_back();
     }

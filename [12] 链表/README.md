@@ -17,7 +17,7 @@ struct ListNode {
 
 **链表的 splice()**
 
-list::splice实现list拼接的功能。将源list的内容部分或全部元素删除，拼插入到目的list。
+list::splice 实现list拼接的功能。将源list的内容部分或全部元素删除，拼插入到目的list。
 
 函数有以下三种声明：
 
@@ -25,10 +25,10 @@ list::splice实现list拼接的功能。将源list的内容部分或全部元素
 2. void splice ( iterator position, list<T,Allocator>& x, iterator it );
 3. void splice ( iterator position, list<T,Allocator>& x, iterator first, iterator last );
 
-position 是要操作的list对象的迭代器
+position 是要操作的 list 对象的迭代器
 
-对于1，会在position把list &x所有的元素到**剪接**到要操作的list对象，而不删除要操的list对象中的元素。
+对于 1，会在 position把 list &x 所有的元素到**剪接**到要操作的 list 对象，而不删除要操作的 list 对象中的元素(和其他元素进行拼接)。
 
-对于2，只会把it的值剪接到要操作的list对象。
+对于 2，只会把it的值剪接到要操作的list对象。
 
-对于3，把first 到 last 剪接到要操作的list对象中。
+对于 3，把first 到 last 剪接到要操作的list对象中。
