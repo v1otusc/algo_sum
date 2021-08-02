@@ -49,13 +49,14 @@ class Solution {
     vector<int> dist(n, inf);
     // 由于从 k 开始，所以该点距离设为 0，也即源点
     dist[k - 1] = 0;
-
     // 代表节点是否被更新，初始值未被更新
-    vector<int> used(n);
+    vector<bool> used(n, false);
+
     for (int i = 0; i < n; ++i) {
-      // 在还未确定最短路的点中，寻找距离最小的点
       int x = -1;
+      // 在还未确定最短路的点中，寻找距离最小的点
       for (int y = 0; y < n; ++y) {
+        // 首先把 dist[k-1] push 进去！ 我悟了
         if (!used[y] && (x == -1 || dist[y] < dist[x])) {
           x = y;
         }
