@@ -35,3 +35,19 @@
 
 ![](./../figs/搜索方法-简单树示意.png)
 
+### 全排列——next_permutation()
+
+组合数学中经常用到排列，这里介绍一个计算序列全排列的函数：`next_permutation（start,end）`，和 `prev_permutation（start,end）`。这两个函数作用是一样的，区别就在于前者求的是当前排列的下一个排列，后一个求的是当前排列的上一个排列。至于这里的“前一个”和“后一个”，我们可以把它理解为序列的字典序的前后，严格来讲，就是对于当前序列 pn，他的下一个序列 pn+1 满足：不存在另外的序列pm，使pn\< pm \< pn+1。
+
+函数原型为：
+
+```c++
+bool next_permutation(iterator start, iterator end);
+```
+
+```c++
+int nums[3] = {1, 2, 3};
+do {
+  cout << nums[0] << nums[1] << nums[2] << endl;
+} while (next_permutation(nums, nums+3))
+```
