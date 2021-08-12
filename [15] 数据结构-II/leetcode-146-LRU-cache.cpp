@@ -51,6 +51,8 @@ class LRUCache {
  private:
   // 哈希链表的结构, 键代表 cahe 中的 key 值
   unordered_map<int, list<pair<int, int>>::iterator> hash;
+  // 最新的信息放在 begin() 的位置
+  // key —— value
   list<pair<int, int>> cache;
   int size;
 

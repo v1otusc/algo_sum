@@ -126,10 +126,51 @@ void sink(int pos) {
 一个简单的哈希表的实现如下：
 
 ```c++
-template <typename T>
-class HashTable {
-  
-}
+class MyHashSet {
+ private:
+  // 存放真正的数据
+  vector<list<int>> data;
+  // 质数
+  static const int base = 769;
+  // 求哈希值
+  static int hash(int key) { return key % base; }
+
+ public:
+  /** Initialize your data structure here. */
+  MyHashSet() : data(base) {}
+
+  void add(int key) {
+    int h = hash(key);
+    for (auto it = data[h].begin(); it != data[h].end(); ++it) {
+      if ((*it) == key) {
+        return;
+      }
+    }
+    data[h].push_back(key);
+  }
+
+  void remove(int key) {
+    int h = hash(key);
+    for (auto it = data[h].begin(); it != data[h].end(); ++it) {
+      if ((*it) == key) {
+        // 参数是 position
+        data[h].erase(it);
+        return;
+      }
+    }
+  }
+
+  /** Returns true if this set contains the specified element */
+  bool contains(int key) {
+    int h = hash(key);
+    for (auto it = data[h].begin(); it != data[h].end(); ++it) {
+      if ((*it) == key) {
+        return true;
+      }
+    }
+    return false;
+  }
+};
 ```
 
 ### 5. <Algorithm> 库总结
