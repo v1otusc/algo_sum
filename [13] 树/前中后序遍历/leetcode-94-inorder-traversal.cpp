@@ -42,6 +42,7 @@ struct TreeNode {
       : val(x), left(left), right(right) {}
 };
 
+/* 递归的方法
 class Solution_Recursion {
  public:
   void inorder(TreeNode *node, vector<int> &res) {
@@ -56,15 +57,31 @@ class Solution_Recursion {
     inorder(root, res);
     return res;
   }
-};
+};*/
 
 class Solution {
  public:
   vector<int> inorderTraversal(TreeNode *root) {
-    
+    vector<int> res;
+    stack<TreeNode *> stk;
+    // 前序遍历，出栈顺序：根左右; 入栈顺序：右左根
+    // 中序遍历，出栈顺序：左根右; 入栈顺序：右根左
+    // 后序遍历，出栈顺序：左右根; 入栈顺序：根右左
+    while (root != nullptr || !stk.empty()) {
+      while (root != nullptr) {
+        // 先根后左入栈
+        stk.push(root);
+        root = root->left;
+      }
+      // 此时最深存在的左子节点出栈
+      root = stk.top();
+      stk.pop();
+      res.push_back(root->val);
+      // 如果 root->right 存在，右入栈，再出栈
+      root = root->right;
+    }
+    return res;
   }
 };
 
-int main(int argc, char const *argv[]) {
-  return 0;
-}
+int main(int argc, char const *argv[]) { return 0; }
