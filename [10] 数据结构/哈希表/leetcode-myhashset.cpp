@@ -21,40 +21,6 @@
  *
  * @题目思路：
  *
- *
- *
- * @LastEditors: zzh
- * @LastEditTime: 2021-01-14 15:07:57
- * @FilePath: /algo_sum/template.cpp
- */
-
-#include "bits/stdc++.h"
-
-using namespace std;
-
-/*
- * @Description:
- *
- *
- *
- * @输入示例：
- *
- *
- *
- * @输出实例：
- *
- *
- *
- * @输入输出说明：
- *
- *
- *
- * @限制条件：
- *
- *
- *
- * @题目思路：
- *
  * 哈希函数：能够将集合中任意可能的元素映射到一个固定范围的整数值，并将该元素存储到整数值对应的地址上
  *
  * 解决冲突的策略
