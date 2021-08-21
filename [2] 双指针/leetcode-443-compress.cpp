@@ -44,9 +44,12 @@ class Solution {
       if (i + 1 < n && chars[i] == chars[i + 1]) {
         int j = i + 1;
         while (j < n && chars[j] == chars[i]) j++;
-        
+
         chars[index++] = chars[i];
-        chars[index++] = *(to_string(j-i).c_str());
+        string diff = to_string(j - i);
+        for (auto ch : diff) {
+          chars[index++] = ch;
+        }
         i = j;
       } else {
         chars[index++] = chars[i++];
