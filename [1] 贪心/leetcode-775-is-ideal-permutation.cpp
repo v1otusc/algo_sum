@@ -38,6 +38,7 @@ class Solution {
   bool isIdealPermutation(vector<int>& nums) {
     int n = nums.size();
     int min_ = n;
+    // 只记录 min_ 大大降低复杂度
     for (int i = n - 1; i >= 2; --i) {
       min_ = min(min_, nums[i]);
       if (nums[i - 2] > min_) return false;
