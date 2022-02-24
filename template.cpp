@@ -1,7 +1,7 @@
 /*
  * @Description:
  *
- * 
+ *  
  *
  * @输入示例：
  *
@@ -24,7 +24,6 @@
  *
  *
  * @LastEditors: zzh
- * @LastEditTime: 2021-01-14 15:07:57
  * @FilePath: /algo_sum/template.cpp
  */
 
@@ -34,7 +33,13 @@ using namespace std;
 
 class Solution {
  public:
-  int solution(vector<int>& g, vector<int>& s) {}
+  void solution() {
+    // 在这里写核心代码
+  }
 };
 
-int main(int argc, char const* argv[]) { return 0; }
+int main(int argc, char const* argv[]) {
+  // 在这里添加测试用例...
+
+  return 0;
+}

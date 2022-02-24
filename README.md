@@ -1,5 +1,15 @@
 # algo_sum
 
+## 新题目归类
+
+copy `template.cpp` 到指定目录:
+
+```sh
+./copy_to.sh file_path_to_paste name_of_file
+```
+
+## notes
+
 [C++基本数据类型](https://github.com/v1otusc/algo_sum/blob/main/c%2B%2B_%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.md)
 
 [ACM输入输出](https://github.com/v1otusc/algo_sum/blob/main/ACM%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA.md)
