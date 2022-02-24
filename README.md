@@ -1,6 +1,6 @@
 # algo_sum
 
-## 新题目归类
+*新题目归类脚本*
 
 copy `template.cpp` 到指定目录:
 
